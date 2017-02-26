@@ -14,6 +14,10 @@ public class Battle: MonoBehaviour {
 	bool cTurn = true;
 	bool mTurn = false;
 
+	Canvas battlescreen;
+	GameObject menu;
+
+	Canvas instructions;
 
 	GameObject cHealth;
 	GameObject mHealth;
@@ -30,7 +34,7 @@ public class Battle: MonoBehaviour {
 
 
 
-	string[,] dialogueString = new string[,]{{ "It's so cute that you think you can be a hero like the guys can.", "It's not cute, I'm fighting for what I believe in! I'm just as capable as men are!" }, { "Yeah, sure. Just sit there and look pretty while we go and take over the town.", "It's patronising to tell a woman to look pretty- we are so much more than our appearances!",},{ "Keep telling yourself that. I don't know why you're even here, we don't need feminism.", "What?! Of course we do! Not all women are in situations where they're treated equally as men.",},{ "What do you mean? The women I see are fine with how things are.", "Every women faces the world differently based on her own personal experiences.",} };
+	string[,] dialogueString = new string[,]{{ "It's so cute that you think you can be a hero like the guys can.", "It's not cute, I'm fighting for what I believe in! I'm just as capable as men are!" }, { "Yeah, sure. Just sit there and look pretty while we go and take over the town.", "It's patronising to tell a woman to look pretty- we are so much more than our appearances!",},{ "Keep telling yourself that. I don't know why you're even here, we don't need feminism.", "What?! Of course we do! Not all women are in situations where they're treated equally as men.",},{ "What do you mean? The women I see are fine with how things are.", "Every women faces the world differently based on her own personal experiences.",},{"How so?","Race, class, gender, and other factors impact how we're viewed by the rest of the world."} };
 
 	int dialogueNum;
 	int dialogueRound;
@@ -46,7 +50,16 @@ public class Battle: MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 
+		instructions = GameObject.Find ("Instructions").GetComponent<Canvas> ();
+		instructions.enabled = false;
+
+
+		menu = GameObject.Find ("Menu");
+		menu.SetActive (true);
+
 	
+		battlescreen = GameObject.Find ("Battle").GetComponent<Canvas>();
+		battlescreen.enabled = false;
 
 		cHealth = GameObject.Find("cHealth");
 		mHealth = GameObject.Find("mHealth");
@@ -72,7 +85,7 @@ public class Battle: MonoBehaviour {
 		Patriarchy.enabled = true;
 
 
-		battleStart = true;
+		battleStart = false;
 
 
 		cHP = 200;
@@ -168,7 +181,7 @@ public class Battle: MonoBehaviour {
 				dialogueRound++;
 
 			}
-			if (dialogueRound > 3) {
+			if (dialogueRound > 4) {
 
 				dialogueRound = 0;
 
@@ -261,6 +274,28 @@ public class Battle: MonoBehaviour {
 				Application.LoadLevel(Application.loadedLevel);
 
 
+			
+			}
+			if (Input.GetKeyDown ("s")) {
+
+				battlescreen.enabled = true;
+				menu.SetActive (false);
+
+				battleStart = true;
+			
+			}
+
+			if (Input.GetKeyDown ("q")) {
+			
+				Application.Quit();
+
+			
+			}
+
+			if (Input.GetKeyDown ("i")) {
+				instructions.enabled = !(instructions.enabled);
+
+			
 			
 			}
 				
